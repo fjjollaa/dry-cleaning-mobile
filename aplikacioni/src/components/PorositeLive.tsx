@@ -75,7 +75,7 @@ function Vija({ statusi }: { statusi: Statusi }) {
   );
 }
 
-export default function PorositeLive({ providerat }: { providerat: string[] }) {
+export default function PorositeLive() {
   const [gjendja, setGjendja] = useState<PorositePamje | null>(null);
   const [rilidhje, setRilidhje] = useState(false);
   const [duke, setDuke] = useState(false);
@@ -167,7 +167,10 @@ export default function PorositeLive({ providerat }: { providerat: string[] }) {
       {gjendja?.pamja === "mysafir" && (
         <section className="card">
           <p>Hyr në llogarinë tënde për të parë porositë dhe statusin e tyre.</p>
-          <ButoniHyrja providerat={providerat} className="action action-bllok" />
+          <ButoniHyrja className="action action-bllok" />
+          <p className="small qendra">
+            Nuk ke llogari? <Link href="/regjistrohu?kthe=%2Fporosite">Krijo llogari</Link>
+          </p>
         </section>
       )}
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
+import ButoniHyrja from "@/components/ButoniHyrja";
 import Hyrja from "@/components/Hyrja";
 import { providerat } from "@/lib/auth";
 import { profiliIm, type Profil } from "@/lib/profili";
@@ -60,7 +61,16 @@ async function PanelPermbajtja() {
           )}
         </>
       )}
-      <Hyrja brenda={Boolean(p)} providerat={providerat} />
+      {p ? (
+        <Hyrja brenda providerat={providerat} />
+      ) : (
+        <div className="veprimet veprimet-kolone">
+          <ButoniHyrja className="action action-bllok" />
+          <Link className="action action-dytesor action-bllok" href="/regjistrohu?kthe=%2Fpanel">
+            Krijo llogari
+          </Link>
+        </div>
+      )}
       <p>
         <Link href="/porosite">Shko te porositë</Link>
       </p>

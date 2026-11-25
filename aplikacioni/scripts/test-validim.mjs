@@ -10,6 +10,12 @@ import {
   statusiParaprak,
   validoPorosine,
 } from "../src/lib/porosite-core.ts";
+import {
+  hashoFjalekalimin,
+  validoRegjistrimin,
+  verifikoFjalekalimin,
+  verifikoHyrjen,
+} from "../src/lib/llogari-core.ts";
 
 // Nëse një rregull e lë një hyrje të keqe të arrijë te SQL, kjo `sql` hedh gabim dhe prova dështon.
 const sqlQePrekLigjet = () => {
@@ -107,5 +113,44 @@ assert.equal(await ndryshoStatusin(sqlQePrekLigjet, pronari, "5; DROP TABLE poro
 assert.equal(await ndryshoStatusin(sqlQePrekLigjet, pronari, "5", "pritje"), "fushe");
 assert.equal(await ndryshoStatusin(sqlQePrekLigjet, pronari, "5", "fshij"), "fushe");
 ok("klienti nuk ndryshon status, pronari nuk porosit, hyrja e keqe nuk arrin te SQL");
+
+// 8) Regjistrimi: validimi i fushave.
+const rg = (o) => validoRegjistrimin({ emri: "Arta Berisha", email: "Arta@Shembull.com", fjalekalimi: "fjalekalim123", ...o });
+assert.deepEqual(rg({}), {
+  ok: true,
+  vlerat: { emri: "Arta Berisha", email: "arta@shembull.com", fjalekalimi: "fjalekalim123" },
+});
+assert.equal(rg({ emri: "  Arta   Berisha  " }).vlerat.emri, "Arta Berisha");
+for (const emri of ["", "A", "x".repeat(61), "Arta\u0000", null, undefined]) {
+  assert.deepEqual(rg({ emri }), { ok: false, fusha: "emri" }, `emri ${JSON.stringify(emri)}`);
+}
+for (const email of ["", "pa-ate.com", "a@b", "a b@c.com", "@c.com", `${"x".repeat(250)}@c.com`, "a@@c.com", null]) {
+  assert.deepEqual(rg({ email }), { ok: false, fusha: "email" }, `email ${JSON.stringify(email)}`);
+}
+for (const fjalekalimi of ["", "shkurt", "       ", "x".repeat(129), null, 12345678, undefined]) {
+  assert.deepEqual(rg({ fjalekalimi }), { ok: false, fusha: "fjalekalimi" }, `fjalekalimi ${JSON.stringify(fjalekalimi)}`);
+}
+assert.equal(rg({ fjalekalimi: "x".repeat(128) }).ok, true);
+ok("regjistrimi: emri, email-i dhe fjalëkalimi (8–128) validohen; email-i kthehet me shkronja të vogla");
+
+// 9) Hash i fjalëkalimit: kripë e rastësishme, verifikim i saktë, asnjë tekst i qartë.
+const h1 = await hashoFjalekalimin("fjalekalim123");
+const h2 = await hashoFjalekalimin("fjalekalim123");
+assert.notEqual(h1, h2); // kripë e ndryshme çdo herë
+assert.ok(h1.startsWith("scrypt$16384$8$1$"));
+assert.ok(!h1.includes("fjalekalim123"));
+assert.equal(await verifikoFjalekalimin("fjalekalim123", h1), true);
+assert.equal(await verifikoFjalekalimin("fjalekalim124", h1), false);
+assert.equal(await verifikoFjalekalimin("", h1), false);
+assert.equal(await verifikoFjalekalimin("fjalekalim123", "jo-hash"), false);
+assert.equal(await verifikoFjalekalimin("fjalekalim123", "scrypt$1$1$1$AA==$AA=="), false);
+ok("hash scrypt me kripë të rastësishme; fjalëkalimi i gabuar dhe hash-i i dëmtuar refuzohen");
+
+// 10) Hyrja me të dhëna bosh ose të gjata nuk arrin te databaza.
+assert.deepEqual(await verifikoHyrjen(sqlQePrekLigjet, "", "x"), { ok: false, arsyeja: "gabim" });
+assert.deepEqual(await verifikoHyrjen(sqlQePrekLigjet, "a@b.com", ""), { ok: false, arsyeja: "gabim" });
+assert.deepEqual(await verifikoHyrjen(sqlQePrekLigjet, "a@b.com", "x".repeat(129)), { ok: false, arsyeja: "gabim" });
+assert.deepEqual(await verifikoHyrjen(sqlQePrekLigjet, null, null), { ok: false, arsyeja: "gabim" });
+ok("hyrja me email/fjalëkalim bosh ose tepër të gjatë refuzohet para databazës");
 
 console.log(`${kaluan} prova kaluan.`);

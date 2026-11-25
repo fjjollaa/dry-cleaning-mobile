@@ -16,7 +16,12 @@ Struktura u mor nga mënyra si punojnë aplikacionet e dyqaneve të vërteta (po
 
 ## Hyrja
 
-Hyrja është me **Google** (klientët dhe pronari). GitHub aktivizohet vetëm nëse `GH_CLIENT_ID` dhe `GH_CLIENT_SECRET` ekzistojnë, për prova gjatë zhvillimit; mos i vendos në publikim. Çdo llogari e re fillon si `klient`. Roli `pronar` (stafi i dyqanit) vendoset vetëm nga databaza (`schema-pronari.sql`), kurrë nga një formular.
+Dy mënyra për çdokënd:
+
+- **Email + fjalëkalim:** llogaria krijohet te `/regjistrohu`. Fjalëkalimi ruhet vetëm si hash scrypt me kripë të rastësishme. Pas 5 përpjekjesh të gabuara llogaria bllokohet 15 minuta; ka edhe një kufi të përgjithshëm kundër spam-it (30 llogari të reja për 10 minuta). **Kufizime:** email-i nuk verifikohet dhe nuk ka rivendosje të fjalëkalimit (kërkon shërbim emaili); në rast harrese fjalëkalimi ndryshohet nga databaza.
+- **Google:** për ata që e kanë (`GOOGLE_CLIENT_ID` dhe `GOOGLE_CLIENT_SECRET`).
+
+GitHub aktivizohet vetëm nëse `GH_CLIENT_ID` dhe `GH_CLIENT_SECRET` ekzistojnë, për prova gjatë zhvillimit; mos i vendos në publikim. Çdo llogari e re fillon si `klient`. Roli `pronar` (stafi i dyqanit) vendoset vetëm nga databaza (`schema-pronari.sql`), kurrë nga një formular.
 
 ## Si e nis
 
@@ -38,6 +43,7 @@ Për të provuar dy rolet përdor një dritare normale dhe një private (dy sked
 ```bash
 npm run test:validim    # pa databazë: validimi i hyrjes
 npm run test:porosite   # kundër Neon (lexon .env.local); përdor vetëm rreshta TEST-… dhe i fshin
+npm run test:llogari    # kundër Neon: llogaritë me email + fjalëkalim (adresa …@example.test, fshihen në fund)
 ```
 
 ## Çfarë mungon (vetëm ti e di)

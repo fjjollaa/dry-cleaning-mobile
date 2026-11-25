@@ -171,6 +171,45 @@ p {
   margin-top: 16px;
 }
 
+/* Hyrja dhe krijimi i llogarisë */
+.gabim {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--bad-bg);
+  color: var(--bad-ink);
+  font-weight: 600;
+}
+
+.qendra {
+  text-align: center;
+}
+
+.veprimet-kolone {
+  flex-direction: column;
+}
+
+.veprimet-kolone .action {
+  margin-top: 0;
+}
+
+.ose {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.ose::before,
+.ose::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
 .tabs {
   position: fixed;
   right: 0;

@@ -7,7 +7,7 @@ import ButoniHyrja from "./ButoniHyrja";
 type Gjendja = "po_ngarkohet" | "mysafir" | { emri: string };
 
 // Pjesa e djathtë e kokës: "Hyr në llogari" për mysafirin, ose emri i përdoruesit që çon te Paneli.
-export default function HyrjaKoka({ providerat }: { providerat: string[] }) {
+export default function HyrjaKoka() {
   const [gjendja, setGjendja] = useState<Gjendja>("po_ngarkohet");
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function HyrjaKoka({ providerat }: { providerat: string[] }) {
 
   if (gjendja === "po_ngarkohet") return <span className="koka-vend" aria-hidden="true" />;
   if (gjendja === "mysafir") {
-    return <ButoniHyrja providerat={providerat} className="action action-vogel" />;
+    return <ButoniHyrja className="action action-vogel" />;
   }
   const emri = gjendja.emri;
   return (

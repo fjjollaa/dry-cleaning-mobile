@@ -7,7 +7,6 @@ import "./globals.css";
 import HyrjaKoka from "@/components/HyrjaKoka";
 import Menu from "@/components/Menu";
 import Pwa from "@/components/Pwa";
-import { providerat } from "@/lib/auth";
 import { BIZNESI } from "@/lib/biznesi";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -34,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Suspense fallback={null}>
               <Menu />
             </Suspense>
-            <HyrjaKoka providerat={providerat} />
+            <HyrjaKoka />
           </div>
         </header>
         {children}

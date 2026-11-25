@@ -22,15 +22,7 @@ const MESAZHET: Record<string, string> = {
 
 type Roli = "klient" | "pronar" | null;
 
-export default function FormaPorosise({
-  sherbimet,
-  roli,
-  providerat,
-}: {
-  sherbimet: Sherbimi[];
-  roli: Roli;
-  providerat: string[];
-}) {
+export default function FormaPorosise({ sherbimet, roli }: { sherbimet: Sherbimi[]; roli: Roli }) {
   const [sasite, setSasite] = useState<Record<string, number>>({});
   const [duke, setDuke] = useState(false);
   const [mesazh, setMesazh] = useState("");
@@ -43,7 +35,10 @@ export default function FormaPorosise({
     return (
       <section className="card">
         <p>Për të dërguar porosi duhet të hysh në llogarinë tënde.</p>
-        <ButoniHyrja providerat={providerat} className="action action-bllok" />
+        <ButoniHyrja className="action action-bllok" />
+        <p className="small qendra">
+          Nuk ke llogari? <Link href="/regjistrohu?kthe=%2Fporosi-e-re">Krijo llogari</Link>
+        </p>
       </section>
     );
   }

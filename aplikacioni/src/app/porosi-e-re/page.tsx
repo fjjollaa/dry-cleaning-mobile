@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import FormaPorosise from "@/components/FormaPorosise";
-import { providerat } from "@/lib/auth";
 import { perdoruesiPerLexim } from "@/lib/profili";
 import { lexoSherbimet, type Sherbimi } from "@/lib/sherbimet";
 
@@ -37,5 +36,5 @@ async function Permbajtja() {
       </>
     );
   }
-  return <FormaPorosise sherbimet={sherbimet} roli={roli} providerat={providerat} />;
+  return <FormaPorosise sherbimet={sherbimet} roli={roli} />;
 }

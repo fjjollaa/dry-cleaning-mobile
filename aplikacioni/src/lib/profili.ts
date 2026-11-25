@@ -6,8 +6,8 @@ import type { Perdorues, Roli } from "./porosite-core";
 
 export type Profil = { id: string; emri: string; roli: Roli };
 
-// ID e llogarisë vjen nga sesioni dhe ka formën "google:123" ose "github:123".
-const KONTO = /^(google|github):\d{1,30}$/;
+// ID e llogarisë vjen nga sesioni dhe ka formën "google:123", "github:123" ose "email:<uuid>".
+const KONTO = /^((google|github):\d{1,30}|email:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
 
 // Identiteti vjen nga sesioni, roli nga Neon. Ky lexim nuk shkruan asgjë:
 // përdoret për faqet dhe për rileximin çdo 5 sekonda.

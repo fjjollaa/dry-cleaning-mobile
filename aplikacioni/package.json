@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test:validim": "node scripts/test-validim.mjs",
     "test:porosite": "node --env-file=.env.local scripts/test-porosite.mjs",
-    "db:skema": "node --env-file=.env.local scripts/apliko-skemen.mjs schema.sql"
+    "db:skema": "node --env-file=.env.local scripts/apliko-skemen.mjs schema.sql",
+    "test:llogari": "node --env-file=.env.local scripts/test-llogari.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.1",

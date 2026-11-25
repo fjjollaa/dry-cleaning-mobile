@@ -2,12 +2,22 @@
 -- Emrat, kategoritë dhe çmimet e shërbimeve më poshtë janë VLERA SHEMBULL (jo të një dyqani real).
 -- Zëvendësoji me listën dhe çmimet reale të dyqanit kur t'i marrësh nga pronari.
 
--- konto_id = 'google:<numri>' ose 'github:<numri>' (ofruesi + ID e llogarisë).
+-- konto_id = 'google:<numri>', 'github:<numri>' ose 'email:<uuid>' (ofruesi + ID e llogarisë).
+-- Llogaritë me email + fjalëkalim ruajnë vetëm HASH-in e fjalëkalimit (kurrë fjalëkalimin).
 CREATE TABLE IF NOT EXISTS perdoruesit (
   konto_id TEXT PRIMARY KEY,
   emri TEXT NOT NULL,
   roli TEXT NOT NULL DEFAULT 'klient' CHECK (roli IN ('klient', 'pronar'))
 );
+
+ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS email TEXT;
+ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS fjalekalimi TEXT;
+ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS deshtime INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS bllokuar_deri TIMESTAMPTZ;
+ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS krijuar TIMESTAMPTZ NOT NULL DEFAULT now();
+
+-- Një llogari për email (pa dallim shkronjash të mëdha/të vogla).
+CREATE UNIQUE INDEX IF NOT EXISTS perdoruesit_email_unik ON perdoruesit (lower(email)) WHERE email IS NOT NULL;
 
 CREATE TABLE IF NOT EXISTS sherbimet (
   id TEXT PRIMARY KEY CHECK (id ~ '^[a-z0-9-]{1,32}$'),
