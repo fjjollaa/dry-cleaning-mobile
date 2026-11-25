@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import FormaRegjistrimi from "@/components/FormaRegjistrimi";
+import TekstiPrivatesise from "@/components/TekstiPrivatesise";
 import { sigurKthe } from "@/lib/kthe";
 
 export default function Regjistrohu(props: PageProps<"/regjistrohu">) {
@@ -16,5 +17,7 @@ export default function Regjistrohu(props: PageProps<"/regjistrohu">) {
 
 async function Permbajtja({ searchParams }: Pick<PageProps<"/regjistrohu">, "searchParams">) {
   const { kthe } = await searchParams;
-  return <FormaRegjistrimi kthe={sigurKthe(Array.isArray(kthe) ? kthe[0] : kthe)} />;
+  return (
+    <FormaRegjistrimi kthe={sigurKthe(Array.isArray(kthe) ? kthe[0] : kthe)} politika={<TekstiPrivatesise />} />
+  );
 }

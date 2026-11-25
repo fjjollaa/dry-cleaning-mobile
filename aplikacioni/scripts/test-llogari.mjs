@@ -40,8 +40,9 @@ export async function provo(sql, shkruaj = () => {}) {
     const krijuar = await krijoLlogari(sql, { emri: "Llogari Prove", email: EMAIL, fjalekalimi: FJALEKALIMI });
     assert.equal(krijuar.rezultati, "krijuar");
     assert.ok(krijuar.id.startsWith("email:"));
-    const rreshti = (await sql`SELECT email, fjalekalimi, roli FROM perdoruesit WHERE konto_id = ${krijuar.id}`)[0];
+    const rreshti = (await sql`SELECT email, fjalekalimi, roli, privatesia_pranuar FROM perdoruesit WHERE konto_id = ${krijuar.id}`)[0];
     assert.equal(rreshti.roli, "klient"); // çdo llogari e re është klient
+    assert.ok(rreshti.privatesia_pranuar, "koha e pranimit të politikës duhet të ruhet");
     assert.ok(String(rreshti.fjalekalimi).startsWith("scrypt$"));
     assert.ok(!String(rreshti.fjalekalimi).includes(FJALEKALIMI));
     ok("llogaria krijohet si klient; fjalëkalimi ruhet vetëm si hash scrypt");

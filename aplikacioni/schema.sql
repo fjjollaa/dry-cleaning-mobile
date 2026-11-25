@@ -15,6 +15,8 @@ ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS fjalekalimi TEXT;
 ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS deshtime INTEGER NOT NULL DEFAULT 0;
 ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS bllokuar_deri TIMESTAMPTZ;
 ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS krijuar TIMESTAMPTZ NOT NULL DEFAULT now();
+-- Koha kur përdoruesi pranoi politikën e privatësisë gjatë regjistrimit me email (NULL për llogaritë më të vjetra ose me Google).
+ALTER TABLE perdoruesit ADD COLUMN IF NOT EXISTS privatesia_pranuar TIMESTAMPTZ;
 
 -- Një llogari për email (pa dallim shkronjash të mëdha/të vogla).
 CREATE UNIQUE INDEX IF NOT EXISTS perdoruesit_email_unik ON perdoruesit (lower(email)) WHERE email IS NOT NULL;

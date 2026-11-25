@@ -56,13 +56,14 @@ function merrHashinERreme() {
 }
 
 export type HyrjaRegjistrimit = { emri: string; email: string; fjalekalimi: string };
-export type GabimiFushes = "emri" | "email" | "fjalekalimi";
+export type GabimiFushes = "emri" | "email" | "fjalekalimi" | "pranimi";
 
 // Hyrja vjen nga klienti, pra është e pabesueshme. Kthen vlerat e pastruara ose emrin e fushës së gabuar.
 export function validoRegjistrimin(raw: {
   emri?: unknown;
   email?: unknown;
   fjalekalimi?: unknown;
+  pranuar?: unknown;
 }): { ok: true; vlerat: HyrjaRegjistrimit } | { ok: false; fusha: GabimiFushes } {
   const emri = String(raw.emri ?? "").trim().replace(/\s+/g, " ");
   if (emri.length < 2 || emri.length > 60 || KARAKTERE_KONTROLLI.test(emri)) return { ok: false, fusha: "emri" };
@@ -74,6 +75,8 @@ export function validoRegjistrimin(raw: {
   if (fjalekalimi.length < FJALEKALIM_MIN || fjalekalimi.length > FJALEKALIM_MAX || !fjalekalimi.trim()) {
     return { ok: false, fusha: "fjalekalimi" };
   }
+  // Pranimi i politikës së privatësisë është i detyrueshëm (vetëm vlera true, jo "true" ose 1).
+  if (raw.pranuar !== true) return { ok: false, fusha: "pranimi" };
   return { ok: true, vlerat: { emri, email, fjalekalimi } };
 }
 
@@ -87,8 +90,8 @@ export async function krijoLlogari(sql: Sql, vlerat: HyrjaRegjistrimit): Promise
   const email = vlerat.email.trim().toLowerCase(); // edhe pa validim, email-i ruhet gjithmonë me shkronja të vogla
   const hash = await hashoFjalekalimin(vlerat.fjalekalimi);
   const rows = await sql`
-    INSERT INTO perdoruesit (konto_id, emri, email, fjalekalimi)
-    SELECT ${id}, ${vlerat.emri}, ${email}, ${hash}
+    INSERT INTO perdoruesit (konto_id, emri, email, fjalekalimi, privatesia_pranuar)
+    SELECT ${id}, ${vlerat.emri}, ${email}, ${hash}, now()
     WHERE (SELECT count(*) FROM perdoruesit
             WHERE email IS NOT NULL AND krijuar > now() - interval '10 minutes') < ${REGJISTRIME_MAX}::int
     ON CONFLICT DO NOTHING

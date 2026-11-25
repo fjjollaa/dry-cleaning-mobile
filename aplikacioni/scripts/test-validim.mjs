@@ -115,7 +115,8 @@ assert.equal(await ndryshoStatusin(sqlQePrekLigjet, pronari, "5", "fshij"), "fus
 ok("klienti nuk ndryshon status, pronari nuk porosit, hyrja e keqe nuk arrin te SQL");
 
 // 8) Regjistrimi: validimi i fushave.
-const rg = (o) => validoRegjistrimin({ emri: "Arta Berisha", email: "Arta@Shembull.com", fjalekalimi: "fjalekalim123", ...o });
+const rg = (o) =>
+  validoRegjistrimin({ emri: "Arta Berisha", email: "Arta@Shembull.com", fjalekalimi: "fjalekalim123", pranuar: true, ...o });
 assert.deepEqual(rg({}), {
   ok: true,
   vlerat: { emri: "Arta Berisha", email: "arta@shembull.com", fjalekalimi: "fjalekalim123" },
@@ -131,7 +132,12 @@ for (const fjalekalimi of ["", "shkurt", "       ", "x".repeat(129), null, 12345
   assert.deepEqual(rg({ fjalekalimi }), { ok: false, fusha: "fjalekalimi" }, `fjalekalimi ${JSON.stringify(fjalekalimi)}`);
 }
 assert.equal(rg({ fjalekalimi: "x".repeat(128) }).ok, true);
-ok("regjistrimi: emri, email-i dhe fjalëkalimi (8–128) validohen; email-i kthehet me shkronja të vogla");
+// Pranimi i politikës së privatësisë: vetëm vlera true e pranon (jo "true", 1, "on" ose mungesa).
+for (const pranuar of [false, undefined, null, "true", "on", 1, 0, "", {}]) {
+  assert.deepEqual(rg({ pranuar }), { ok: false, fusha: "pranimi" }, `pranuar ${JSON.stringify(pranuar)}`);
+}
+assert.equal(rg({ pranuar: true }).ok, true);
+ok("regjistrimi: emri, email-i, fjalëkalimi (8–128) dhe pranimi i politikës (vetëm true) validohen; email-i kthehet me shkronja të vogla");
 
 // 9) Hash i fjalëkalimit: kripë e rastësishme, verifikim i saktë, asnjë tekst i qartë.
 const h1 = await hashoFjalekalimin("fjalekalim123");

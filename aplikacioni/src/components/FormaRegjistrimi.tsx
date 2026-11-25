@@ -10,12 +10,13 @@ const MESAZHET: Record<string, string> = {
   emri: "Shkruaj emrin tënd (2 deri 60 shkronja).",
   email: "Shkruaj një email të vlefshëm.",
   fjalekalimi: "Fjalëkalimi duhet të ketë të paktën 8 shkronja ose shifra.",
+  pranimi: "Duhet të pranosh politikën e privatësisë për të krijuar llogari.",
   ekziston: "Ky email ka tashmë një llogari. Provo të hysh.",
   shume: "Shumë llogari të reja tani. Provo përsëri pas pak minutash.",
   databaza: "Llogaria nuk u krijua. Provo përsëri.",
 };
 
-export default function FormaRegjistrimi({ kthe }: { kthe: string }) {
+export default function FormaRegjistrimi({ kthe, politika }: { kthe: string; politika: React.ReactNode }) {
   const router = useRouter();
   const [duke, setDuke] = useState(false);
   const [gabim, setGabim] = useState("");
@@ -26,10 +27,11 @@ export default function FormaRegjistrimi({ kthe }: { kthe: string }) {
     const emri = String(fushat.get("emri") ?? "");
     const email = String(fushat.get("email") ?? "");
     const fjalekalimi = String(fushat.get("fjalekalimi") ?? "");
+    const pranuar = fushat.get("pranuar") === "on";
     setDuke(true);
     setGabim("");
     try {
-      const kodi = await regjistrohu({ emri, email, fjalekalimi });
+      const kodi = await regjistrohu({ emri, email, fjalekalimi, pranuar });
       if (kodi !== "krijuar") {
         setGabim(MESAZHET[kodi] ?? MESAZHET.databaza);
         setDuke(false);
@@ -69,6 +71,16 @@ export default function FormaRegjistrimi({ kthe }: { kthe: string }) {
         />
         <p className="small">Të paktën 8 shkronja ose shifra. Mos përdor të njëjtin fjalëkalim si në llogari të tjera.</p>
 
+        <details className="politika">
+          <summary>Lexo politikën e privatësisë</summary>
+          <div className="politika-tekst tekst">{politika}</div>
+        </details>
+
+        <label className="pranim" htmlFor="pranuar">
+          <input id="pranuar" name="pranuar" type="checkbox" required />
+          <span>Kam lexuar dhe pranoj politikën e privatësisë</span>
+        </label>
+
         {gabim && (
           <p className="gabim" role="alert">
             {gabim}
@@ -78,9 +90,6 @@ export default function FormaRegjistrimi({ kthe }: { kthe: string }) {
         <button className="action action-bllok" type="submit" disabled={duke}>
           {duke ? "Po krijohet…" : "Krijo llogari"}
         </button>
-        <p className="small qendra">
-          Duke krijuar llogari pranon <Link href="/privatesia">politikën e privatësisë</Link>.
-        </p>
       </form>
 
       <p className="small qendra">
