@@ -2,7 +2,7 @@
 
 Projekti individual i lëndës "Programimi për Pajisje Mobile" (AAB, 2026/2027). Aplikacion Next.js (PWA, mobile-first) për një dyqan pastrimi kimik.
 
-> **Gjendja:** kjo është një HIPOTEZË që duhet vërtetuar me pronarin real. Emri i dyqanit, kontakti, orari, çmimet, kategoritë dhe emrat e shërbimeve janë `[PLOTËSO]` ose shembuj deri sa të flasësh me pronarin. Asgjë nuk është shpikur si fakt.
+> **Gjendja:** kjo është një HIPOTEZË që duhet vërtetuar me pronarin real. Emri i dyqanit, telefoni, adresa, orari, kategoritë, emrat e shërbimeve dhe çmimet janë **VLERA SHEMBULL** (jo të një dyqani real) deri sa të flasësh me pronarin. Personi i kontaktit është `[PLOTËSO]`: duhet një person real.
 
 ## Si funksionon (sipas aplikacioneve të vërteta të pastrimit kimik)
 
@@ -42,7 +42,7 @@ npm run test:porosite   # kundër Neon (lexon .env.local); përdor vetëm rresht
 
 ## Çfarë mungon (vetëm ti e di)
 
-Kërko `[PLOTËSO]` në `aplikacioni/src/lib/biznesi.ts` (emri, kontakti, telefoni, adresa, orari) dhe plotëso çmimet dhe emrat e vërtetë të shërbimeve te tabela `sherbimet`. Mos shpik emra, çmime, orare ose biseda.
+Vlerat shembull duhen zëvendësuar me faktet e vërteta nga pronari: `aplikacioni/src/lib/biznesi.ts` (emri, kontakti, telefoni, adresa, orari) dhe tabela `sherbimet` (emrat dhe çmimet e shërbimeve). Në raporte shkruaj që vlerat ishin shembull deri kur i dha pronari. Mos shpik biseda ose intervista.
 
 ## Struktura
 

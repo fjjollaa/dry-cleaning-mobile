@@ -1,16 +1,17 @@
-// Të dhënat e dyqanit real. Vetëm pronari i di ato: mos shpik asgjë.
-// Plotëso çdo [PLOTËSO] pasi të flasësh me pronarin dhe merr lejen e tij ta shfaqësh.
+// Të dhënat e dyqanit. VLERA SHEMBULL: emri, telefoni, adresa dhe orari nuk janë të një dyqani real.
+// Zëvendësoji me faktet e vërteta pasi të flasësh me pronarin. Kontakti nuk shfaqet te faqet,
+// por projekti kërkon një person real kontakti: plotësoje me emrin e tij.
 export const BIZNESI = {
-  emri: "[PLOTËSO] emri i dyqanit",
+  emri: "Pastrim Kimik Qendra",
   kontakti: "[PLOTËSO] personi i kontaktit",
-  telefoni: "[PLOTËSO] numri i telefonit",
-  adresa: "[PLOTËSO] adresa",
-  orari: "[PLOTËSO] orari i punës",
+  telefoni: "+383 44 000 000",
+  adresa: "Qendër, Prishtinë",
+  orari: "E hënë – e shtunë 08:00 – 19:00 · E diel mbyllur",
 } as const;
 
 export const PLOTESO = "[PLOTËSO]";
 
-// Çmimi real vjen nga pronari. Pa të, shfaqet shenja që duhet plotësuar.
+// Çmimi vjen nga databaza. Pa çmim të dhënë, shfaqet shenja që duhet plotësuar.
 export function formatoCmimin(cmimi: number | null, njesia: string): string {
   if (cmimi === null) return `${PLOTESO} çmimi`;
   return `${cmimi.toFixed(2)} € / ${njesia}`;

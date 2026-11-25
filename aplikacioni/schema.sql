@@ -1,6 +1,6 @@
 -- Pastrim kimik · tabelat. Ekzekuto në Neon SQL Editor (databaza jote, jo e profesorit).
--- Emrat e shërbimeve dhe kategoritë më poshtë janë SHEMBUJ. Zëvendësoji me listën reale të dyqanit.
--- Çmimet janë NULL me qëllim: vetëm pronari i di çmimet reale [PLOTËSO].
+-- Emrat, kategoritë dhe çmimet e shërbimeve më poshtë janë VLERA SHEMBULL (jo të një dyqani real).
+-- Zëvendësoji me listën dhe çmimet reale të dyqanit kur t'i marrësh nga pronari.
 
 -- konto_id = 'google:<numri>' ose 'github:<numri>' (ofruesi + ID e llogarisë).
 CREATE TABLE IF NOT EXISTS perdoruesit (
@@ -44,13 +44,16 @@ CREATE TABLE IF NOT EXISTS porosia_artikujt (
   PRIMARY KEY (porosia_id, sherbimi_id)
 );
 
-INSERT INTO sherbimet (id, kategoria, emri, pershkrimi, njesia) VALUES
-  ('kemishe', 'Veshje', 'Këmishë', 'Pastrim dhe hekurosje.', 'copë'),
-  ('pantallona', 'Veshje', 'Pantallona', 'Pastrim dhe hekurosje.', 'copë'),
-  ('kostum', 'Veshje', 'Kostum (2 pjesë)', 'Xhaketë dhe pantallona.', 'copë'),
-  ('xhakete', 'Veshje', 'Xhaketë / pallto', 'Pastrim kimik.', 'copë'),
-  ('perde', 'Shtëpi', 'Perde', 'Pastrim dhe hekurosje.', 'copë'),
-  ('batanije', 'Shtëpi', 'Batanije / jorgan', 'Pastrim kimik.', 'copë')
+INSERT INTO sherbimet (id, kategoria, emri, pershkrimi, cmimi_euro, njesia) VALUES
+  ('kemishe', 'Veshje', 'Këmishë', 'Pastrim dhe hekurosje.', 1.50, 'copë'),
+  ('bluze', 'Veshje', 'Bluzë / triko', 'Pastrim i butë.', 2.50, 'copë'),
+  ('pantallona', 'Veshje', 'Pantallona', 'Pastrim dhe hekurosje.', 3.00, 'copë'),
+  ('fustan', 'Veshje', 'Fustan', 'Pastrim kimik dhe hekurosje.', 6.00, 'copë'),
+  ('xhakete', 'Veshje', 'Xhaketë', 'Pastrim kimik.', 5.00, 'copë'),
+  ('kostum', 'Veshje', 'Kostum (2 pjesë)', 'Xhaketë dhe pantallona.', 8.00, 'copë'),
+  ('pallto', 'Veshje', 'Pallto / mantel', 'Pastrim kimik.', 8.00, 'copë'),
+  ('perde', 'Shtëpi', 'Perde (një krah)', 'Pastrim dhe hekurosje.', 4.00, 'copë'),
+  ('batanije', 'Shtëpi', 'Batanije / jorgan', 'Pastrim kimik, thahet plotësisht.', 8.00, 'copë')
 ON CONFLICT (id) DO NOTHING;
 
 SELECT id, kategoria, emri, cmimi_euro FROM sherbimet ORDER BY kategoria, emri;

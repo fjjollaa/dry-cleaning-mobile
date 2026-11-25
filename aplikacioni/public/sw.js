@@ -1,6 +1,6 @@
 // Kjo cache përmban VETËM dokumentin offline, ikonat dhe çmimoren publike.
 // Porositë, /panel, /api/auth dhe /api/porosite nuk ruhen kurrë.
-const CACHE = "pastrim-public-v2";
+const CACHE = "pastrim-public-v3";
 const API = "/api/sherbimet";
 const SHELL = ["/offline.html", "/icons/icon-192.png", "/icons/icon-512.png"];
 
