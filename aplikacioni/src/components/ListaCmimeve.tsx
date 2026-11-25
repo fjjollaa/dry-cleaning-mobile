@@ -15,7 +15,7 @@ export function ListaCmimeve({ sherbimet }: { sherbimet: Sherbimi[] }) {
                   {s.emri}
                   {s.pershkrimi && <span className="small"> · {s.pershkrimi}</span>}
                 </span>
-                <strong>{formatoCmimin(s.cmimi, s.njesia)}</strong>
+                <strong className="cmimi">{formatoCmimin(s.cmimi, s.njesia)}</strong>
               </li>
             ))}
           </ul>

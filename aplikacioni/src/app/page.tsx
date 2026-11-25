@@ -1,6 +1,8 @@
 import { Suspense } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
+import banner from "@/assets/banner.jpg";
 import { ListaCmimeve } from "@/components/ListaCmimeve";
 import { BIZNESI } from "@/lib/biznesi";
 import { lexoSherbimet, type Sherbimi } from "@/lib/sherbimet";
@@ -8,14 +10,38 @@ import { lexoSherbimet, type Sherbimi } from "@/lib/sherbimet";
 export default function Home() {
   return (
     <main>
-      <h1>Pastrim kimik</h1>
+      <header className="hero">
+        <Image
+          src={banner}
+          alt="Këmisha të mbuluara me plastikë, të varura në vegla, me një makinë larëse në sfond"
+          quality={90}
+          loading="eager"
+          fetchPriority="high"
+          sizes="(max-width: 720px) 100vw, 688px"
+          className="hero-img"
+        />
+        <div className="hero-text">
+          <h1>{BIZNESI.emri}</h1>
+          <p>Dërgo porosinë nga telefoni dhe ndiq statusin e rrobave.</p>
+        </div>
+      </header>
 
       <section className="card" aria-label="Të dhënat e dyqanit">
-        <h2>{BIZNESI.emri}</h2>
-        <p>Adresa: {BIZNESI.adresa}</p>
-        <p>Telefoni: {BIZNESI.telefoni}</p>
-        <p>Orari: {BIZNESI.orari}</p>
-        <Link className="action" href="/porosi-e-re">
+        <dl className="info">
+          <div>
+            <dt>Adresa</dt>
+            <dd>{BIZNESI.adresa}</dd>
+          </div>
+          <div>
+            <dt>Telefoni</dt>
+            <dd>{BIZNESI.telefoni}</dd>
+          </div>
+          <div>
+            <dt>Orari</dt>
+            <dd>{BIZNESI.orari}</dd>
+          </div>
+        </dl>
+        <Link className="action action-bllok" href="/porosi-e-re">
           Bëj një porosi
         </Link>
       </section>

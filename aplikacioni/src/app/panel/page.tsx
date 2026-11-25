@@ -12,6 +12,14 @@ export default function Panel() {
       <Suspense fallback={<p>Po ngarkohet…</p>}>
         <PanelPermbajtja />
       </Suspense>
+      <section className="card pa-internet">
+        <h3>Pa internet</h3>
+        <p className="small">
+          Çmimorja dhe orari lexohen edhe pa internet, por kopja e ruajtur mund të jetë e vjetër. Porositë nuk dërgohen
+          dhe nuk ndryshohen pa internet.
+        </p>
+        <a href="/offline.html">Hap çmimoren e ruajtur</a>
+      </section>
     </main>
   );
 }
@@ -33,13 +41,16 @@ async function PanelPermbajtja() {
   }
 
   return (
-    <>
+    <section className="card profili">
       {!p ? (
         <p>Çmimorja është publike. Për të dërguar porosi hyr në llogarinë tënde.</p>
       ) : (
         <>
           <p>
-            Përshëndetje, {p.emri}. Roli: <strong>{p.roli === "pronar" ? "dyqani (pronar)" : "klient"}</strong>.
+            Përshëndetje, <strong>{p.emri}</strong>
+          </p>
+          <p>
+            Roli: <span className="chip">{p.roli === "pronar" ? "dyqani (pronar)" : "klient"}</span>
           </p>
           {p.roli === "klient" && (
             <p className="small">
@@ -53,6 +64,6 @@ async function PanelPermbajtja() {
       <p>
         <Link href="/porosite">Shko te porositë</Link>
       </p>
-    </>
+    </section>
   );
 }

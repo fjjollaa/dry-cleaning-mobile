@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import FormaPorosise from "@/components/FormaPorosise";
+import { providerat } from "@/lib/auth";
 import { perdoruesiPerLexim } from "@/lib/profili";
 import { lexoSherbimet, type Sherbimi } from "@/lib/sherbimet";
 
@@ -9,7 +10,9 @@ export default function PorosiERe() {
   return (
     <main>
       <h1>Porosi e re</h1>
-      <p>Zgjidh artikujt, dhe ditën kur i sjell te dyqani. Dyqani e pranon porosinë dhe ti e ndjek statusin këtu.</p>
+      <p className="lead">
+        Zgjidh artikujt dhe ditën kur i sjell te dyqani. Dyqani e pranon porosinë dhe ti e ndjek statusin te Porositë.
+      </p>
       <Suspense fallback={<p>Po ngarkohet…</p>}>
         <Permbajtja />
       </Suspense>
@@ -34,5 +37,5 @@ async function Permbajtja() {
       </>
     );
   }
-  return <FormaPorosise sherbimet={sherbimet} roli={roli} />;
+  return <FormaPorosise sherbimet={sherbimet} roli={roli} providerat={providerat} />;
 }

@@ -2,10 +2,10 @@
 // Zëvendësoji me faktet e vërteta pasi të flasësh me pronarin. Kontakti nuk shfaqet te faqet,
 // por projekti kërkon një person real kontakti: plotësoje me emrin e tij.
 export const BIZNESI = {
-  emri: "Pastrim Kimik Qendra",
+  emri: "Pastrim Kimik Expert Wash",
   kontakti: "[PLOTËSO] personi i kontaktit",
   telefoni: "+383 44 000 000",
-  adresa: "Qendër, Prishtinë",
+  adresa: "Qendër, Podujevë",
   orari: "E hënë – e shtunë 08:00 – 19:00 · E diel mbyllur",
 } as const;
 

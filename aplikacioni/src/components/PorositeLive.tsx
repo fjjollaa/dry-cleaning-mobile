@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ndryshoStatusPorosie } from "@/app/porosite/actions";
+import ButoniHyrja from "@/components/ButoniHyrja";
 import type { Porosia, PorositePamje, Statusi } from "@/lib/porosite-core";
 
 const KOHA = 5000; // rilexim çdo 5 sekonda
@@ -53,11 +54,7 @@ function formatoDaten(data: string): string {
 
 function Vija({ statusi }: { statusi: Statusi }) {
   if (statusi === "refuzuar") {
-    return (
-      <p>
-        Statusi: <span className="status status-refuzuar">{TEKSTI_STATUSIT.refuzuar}</span>
-      </p>
-    );
+    return <p className="small">Dyqani e refuzoi këtë porosi.</p>;
   }
   const tani = HAPAT.findIndex((h) => h.statusi === statusi);
   return (
@@ -78,7 +75,7 @@ function Vija({ statusi }: { statusi: Statusi }) {
   );
 }
 
-export default function PorositeLive() {
+export default function PorositeLive({ providerat }: { providerat: string[] }) {
   const [gjendja, setGjendja] = useState<PorositePamje | null>(null);
   const [rilidhje, setRilidhje] = useState(false);
   const [duke, setDuke] = useState(false);
@@ -168,9 +165,10 @@ export default function PorositeLive() {
       {!gjendja && !rilidhje && <p>Po lexohen porositë nga serveri…</p>}
 
       {gjendja?.pamja === "mysafir" && (
-        <p>
-          <Link href="/panel">Hyr në llogari</Link> për të parë porositë e tua.
-        </p>
+        <section className="card">
+          <p>Hyr në llogarinë tënde për të parë porositë dhe statusin e tyre.</p>
+          <ButoniHyrja providerat={providerat} className="action action-bllok" />
+        </section>
       )}
 
       {gjendja && gjendja.pamja !== "mysafir" && (
@@ -184,10 +182,11 @@ export default function PorositeLive() {
             <ul className="porosite">
               {gjendja.porosite.map((p) => (
                 <li key={p.id} className="card">
-                  <p>
+                  <div className="porosia-krye">
                     <strong>Porosia #{p.id}</strong>
-                    {p.klienti && <> · Klienti: {p.klienti}</>}
-                  </p>
+                    <span className={`chip chip-${p.statusi}`}>{TEKSTI_STATUSIT[p.statusi]}</span>
+                  </div>
+                  {p.klienti && <p className="small">Klienti: {p.klienti}</p>}
                   <ul className="artikujt">
                     {p.artikujt.map((a) => (
                       <li key={a.emri}>

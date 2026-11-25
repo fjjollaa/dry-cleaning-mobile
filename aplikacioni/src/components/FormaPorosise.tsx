@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { dergoPorosiNgaForma } from "@/app/porosite/actions";
+import ButoniHyrja from "@/components/ButoniHyrja";
 import { formatoCmimin } from "@/lib/biznesi";
 import { grupoNgaKategoria, type Sherbimi } from "@/lib/katalogu";
 
@@ -21,7 +22,15 @@ const MESAZHET: Record<string, string> = {
 
 type Roli = "klient" | "pronar" | null;
 
-export default function FormaPorosise({ sherbimet, roli }: { sherbimet: Sherbimi[]; roli: Roli }) {
+export default function FormaPorosise({
+  sherbimet,
+  roli,
+  providerat,
+}: {
+  sherbimet: Sherbimi[];
+  roli: Roli;
+  providerat: string[];
+}) {
   const [sasite, setSasite] = useState<Record<string, number>>({});
   const [duke, setDuke] = useState(false);
   const [mesazh, setMesazh] = useState("");
@@ -32,9 +41,10 @@ export default function FormaPorosise({ sherbimet, roli }: { sherbimet: Sherbimi
 
   if (roli === null) {
     return (
-      <p>
-        <Link href="/panel">Hyr në llogari</Link> për të dërguar porosi.
-      </p>
+      <section className="card">
+        <p>Për të dërguar porosi duhet të hysh në llogarinë tënde.</p>
+        <ButoniHyrja providerat={providerat} className="action action-bllok" />
+      </section>
     );
   }
   if (roli === "pronar") {
@@ -129,10 +139,11 @@ export default function FormaPorosise({ sherbimet, roli }: { sherbimet: Sherbimi
       <label htmlFor="shenime">Shënime (opsionale, deri në 200 shkronja)</label>
       <textarea id="shenime" name="shenime" rows={3} maxLength={200} />
 
-      <p>
-        <strong>Gjithsej: {gjithsej} copë</strong>
-      </p>
-      <button className="action" type="submit" disabled={duke || gjithsej === 0}>
+      <div className="permbledhja">
+        <span>Gjithsej</span>
+        <strong>{gjithsej} copë</strong>
+      </div>
+      <button className="action action-bllok" type="submit" disabled={duke || gjithsej === 0}>
         {duke ? "Po dërgohet…" : "Dërgo porosinë"}
       </button>
 

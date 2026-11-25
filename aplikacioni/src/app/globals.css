@@ -1,32 +1,25 @@
+/* Dizajni: e bardhë + blu e hapur. Mobile-first; tabelat e poshtme në telefon, menu lart në ekran të gjerë. */
 :root {
-  --bg: #f5f9fa;
-  --card: #ffffff;
-  --text: #12222b;
-  --muted: #4a5b66;
-  --line: #b9c9d1;
-  --link: #075a69;
-  --btn: #0b6e7f;
-  --btn-text: #ffffff;
-  --btn-alt: #5b6b75;
-  --warn-bg: #fff4d6;
-  --warn-line: #b58400;
-  --warn-text: #4a3600;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0e1a20;
-    --card: #15262e;
-    --text: #e8f1f4;
-    --muted: #b0c2cb;
-    --line: #3c5967;
-    --link: #7fd6e6;
-    --btn: #0b6e7f;
-    --btn-alt: #566873;
-    --warn-bg: #3a2f00;
-    --warn-line: #d9b94a;
-    --warn-text: #ffe9a6;
-  }
+  color-scheme: light;
+  --bg: #f4f9ff;
+  --surface: #ffffff;
+  --blue-50: #f2f8ff;
+  --blue-100: #e3f0ff;
+  --blue-200: #c9e1ff;
+  --primary: #1f6fe0;
+  --primary-strong: #1858b8;
+  --ink: #0f2742;
+  --muted: #4b6584;
+  --line: #d4e5fa;
+  --ok-bg: #e6f6ee;
+  --ok-ink: #0f6a3b;
+  --warn-bg: #fff4d9;
+  --warn-ink: #6b4a00;
+  --warn-line: #e8c872;
+  --bad-bg: #fdecea;
+  --bad-ink: #a1241c;
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(15, 39, 66, 0.06), 0 8px 24px rgba(31, 111, 224, 0.08);
 }
 
 * {
@@ -36,78 +29,249 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  line-height: 1.5;
-  background: var(--bg);
-  color: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--blue-100) 0, var(--bg) 340px) no-repeat, var(--bg);
+  /* vend për tabelat e poshtme në telefon */
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
 }
 
 a {
-  color: var(--link);
+  color: var(--primary-strong);
 }
 
 main {
   max-width: 720px;
-  margin: auto;
-  padding: 16px;
+  margin: 0 auto;
+  padding: 16px 16px 24px;
 }
 
 h1 {
-  font-size: 1.6rem;
-  margin: 8px 0 16px;
+  margin: 4px 0 8px;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 h2 {
+  margin: 24px 0 10px;
   font-size: 1.2rem;
 }
 
 h3 {
-  margin: 0 0 6px;
-  font-size: 1.1rem;
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: var(--primary-strong);
 }
 
+p {
+  margin: 8px 0;
+}
+
+.lead {
+  color: var(--muted);
+  margin: 4px 0 16px;
+}
+
+.small {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Koka dhe menuja */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   border-bottom: 1px solid var(--line);
-  background: var(--card);
+  /* pa backdrop-filter: ai do ta bënte koken "kontejner" për menunë fixed të poshtme */
+  background: #ffffff;
 }
 
-.topbar nav {
+.topbar-in {
   display: flex;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   max-width: 720px;
-  margin: auto;
-  padding: 0 8px;
+  margin: 0 auto;
+  padding: 10px 16px;
 }
 
-.topbar a {
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand img {
+  flex: none;
+  border-radius: 9px;
+}
+
+.brand span {
+  font-size: 0.95rem;
+  line-height: 1.15;
+}
+
+/* Butoni "Hyr në llogari" dhe profili në kokë */
+.action-vogel {
+  min-height: 34px;
+  margin-top: 0;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.koka-vend {
+  display: inline-block;
+  min-width: 100px;
+  min-height: 34px;
+}
+
+.profili-pill {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 10px;
+  gap: 8px;
+  max-width: 150px;
+  padding: 4px 14px 4px 4px;
+  border-radius: 999px;
+  background: var(--blue-100);
+  color: var(--primary-strong);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.profili-emri {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pa-internet {
+  margin-top: 16px;
+}
+
+.tabs {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: #ffffff;
+  box-shadow: 0 -6px 20px rgba(15, 39, 66, 0.07);
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 52px;
+  padding: 6px 4px;
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 0.72rem;
   font-weight: 600;
+  text-decoration: none;
+}
+
+.tab svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tab[aria-current="page"] {
+  background: var(--blue-100);
+  color: var(--primary-strong);
+}
+
+.tab span {
+  white-space: nowrap;
+}
+
+@media (min-width: 720px) {
+  body {
+    padding-bottom: 0;
+  }
+
+  .topbar-in {
+    max-width: 960px;
+  }
+
+  .brand span {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .tabs {
+    position: static;
+    display: flex;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .tab {
+    flex-direction: row;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+  }
+
+  .tab svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .footer {
   max-width: 720px;
-  margin: auto;
-  padding: 16px;
+  margin: 0 auto;
+  padding: 8px 16px 24px;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
-.list,
-.porosite {
-  display: grid;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
+/* Karta dhe butonat */
 .card {
   padding: 16px;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--card);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
 .card p {
@@ -118,109 +282,158 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  gap: 8px;
+  min-height: 48px;
   margin-top: 8px;
-  padding: 8px 16px;
+  padding: 10px 22px;
   border: 0;
-  border-radius: 8px;
-  background: var(--btn);
-  color: var(--btn-text);
+  border-radius: 12px;
+  background: var(--primary);
+  color: #ffffff;
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+}
+
+.action:hover {
+  background: var(--primary-strong);
+}
+
+.action:active {
+  transform: scale(0.98);
 }
 
 .action-dytesor {
-  background: var(--btn-alt);
+  border: 1px solid var(--blue-200);
+  background: var(--blue-100);
+  color: var(--primary-strong);
+}
+
+.action-dytesor:hover {
+  background: var(--blue-200);
+}
+
+.action-bllok {
+  display: flex;
+  width: 100%;
 }
 
 .action:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: default;
 }
 
 .action:focus-visible,
+.tab:focus-visible,
 a:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid var(--link);
+textarea:focus-visible,
+.stepper-btn:focus-visible {
+  outline: 3px solid var(--primary);
   outline-offset: 2px;
 }
 
-.back-link {
+.chip {
   display: inline-block;
-  margin-bottom: 8px;
-}
-
-.form {
-  display: grid;
-  gap: 6px;
-  margin-top: 20px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--card);
-}
-
-.form label {
-  margin-top: 8px;
-  font-weight: 600;
-}
-
-.form input,
-.form textarea {
-  width: 100%;
-  min-height: 44px;
-  padding: 10px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text);
-  font: inherit;
-}
-
-.live-box {
-  margin-top: 8px;
-}
-
-.live-box .banner {
-  padding: 10px 12px;
-  border: 1px solid var(--warn-line);
-  border-radius: 8px;
-  background: var(--warn-bg);
-  color: var(--warn-text);
-}
-
-.veprimet {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.small {
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-.status {
-  padding: 2px 8px;
-  border: 1px solid var(--line);
+  padding: 3px 10px;
   border-radius: 999px;
-  font-weight: 600;
+  background: var(--blue-100);
+  color: var(--primary-strong);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.status-gati {
-  border-color: #14683a;
-  background: #14683a;
+.chip-pritje {
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+}
+
+.chip-gati {
+  background: var(--ok-bg);
+  color: var(--ok-ink);
+}
+
+.chip-marre {
+  background: #eaeff6;
+  color: #3b4d66;
+}
+
+.chip-refuzuar {
+  background: var(--bad-bg);
+  color: var(--bad-ink);
+}
+
+/* Banderola e faqes kryesore */
+.hero {
+  position: relative;
+  margin: 0 0 16px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--blue-100);
+  box-shadow: var(--shadow);
+}
+
+.hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  max-height: 340px;
+  object-fit: cover;
+}
+
+.hero-text {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 56px 18px 18px;
+  background: linear-gradient(to top, rgba(8, 32, 66, 0.88), rgba(8, 32, 66, 0));
   color: #ffffff;
 }
 
-.status-refuzuar {
-  border-style: dashed;
+.hero-text h1 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+.hero-text p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Të dhënat e dyqanit */
+.info {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 8px;
+}
+
+.info div {
+  display: grid;
+  gap: 2px;
+}
+
+.info dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.info dd {
+  margin: 0;
+  font-weight: 600;
 }
 
 /* Çmimorja */
+.list {
+  display: grid;
+  gap: 14px;
+}
+
 .cmimorja {
   margin: 0;
   padding: 0;
@@ -229,9 +442,10 @@ textarea:focus-visible {
 
 .cmimorja li {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 0;
+  padding: 11px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -239,16 +453,35 @@ textarea:focus-visible {
   border-top: 0;
 }
 
+.cmimi {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--blue-50);
+  color: var(--primary-strong);
+  white-space: nowrap;
+}
+
 /* Shporta e porosisë */
+.form {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .grupi {
-  margin: 0;
-  padding: 8px 12px;
+  margin: 0 0 6px;
+  padding: 6px 14px 10px;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
 .grupi legend {
-  padding: 0 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--blue-100);
+  color: var(--primary-strong);
   font-weight: 700;
 }
 
@@ -257,7 +490,7 @@ textarea:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 0;
+  padding: 10px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -272,26 +505,31 @@ textarea:focus-visible {
 .stepper {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .stepper output {
-  min-width: 28px;
+  min-width: 30px;
   text-align: center;
-  font-weight: 700;
   font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .stepper-btn {
   width: 44px;
   height: 44px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--card);
-  color: var(--text);
+  border: 1px solid var(--blue-200);
+  border-radius: 12px;
+  background: var(--blue-50);
+  color: var(--primary-strong);
   font: inherit;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  line-height: 1;
   cursor: pointer;
+}
+
+.stepper-btn:hover:not(:disabled) {
+  background: var(--blue-100);
 }
 
 .stepper-btn:disabled {
@@ -299,22 +537,91 @@ textarea:focus-visible {
   cursor: default;
 }
 
-.stepper-btn:focus-visible {
-  outline: 3px solid var(--link);
-  outline-offset: 2px;
+.form label {
+  margin-top: 6px;
+  font-weight: 700;
 }
 
-/* Porositë: artikujt dhe vija kohore e statusit */
+.form input,
+.form textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid var(--blue-200);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--ink);
+  font: inherit;
+}
+
+.permbledhja {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--blue-100);
+  font-weight: 700;
+}
+
+.permbledhja strong {
+  color: var(--primary-strong);
+  font-size: 1.15rem;
+}
+
+/* Porositë */
+.live-box {
+  margin-top: 8px;
+}
+
+.live-box .banner {
+  padding: 10px 14px;
+  border: 1px solid var(--warn-line);
+  border-radius: 12px;
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+}
+
+.porosite {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.porosia-krye {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .artikujt {
-  margin: 4px 0;
+  margin: 6px 0;
   padding-left: 20px;
 }
 
+.veprimet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.njoftim {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--ok-bg);
+  color: var(--ok-ink);
+  font-weight: 700;
+}
+
+/* Vija kohore e statusit */
 .timeline {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
-  margin: 12px 0;
+  margin: 14px 0 10px;
   padding: 0;
   list-style: none;
   text-align: center;
@@ -322,37 +629,55 @@ textarea:focus-visible {
 }
 
 .timeline li {
+  position: relative;
   display: grid;
   justify-items: center;
   gap: 4px;
   color: var(--muted);
 }
 
+.timeline li + li::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  right: 50%;
+  width: 100%;
+  height: 3px;
+  background: var(--blue-200);
+}
+
+.timeline li.done::before,
+.timeline li.current::before {
+  background: var(--primary);
+}
+
 .timeline .pika {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 28px;
   height: 28px;
-  border: 2px solid var(--line);
+  border: 2px solid var(--blue-200);
   border-radius: 50%;
+  background: #ffffff;
   font-weight: 700;
 }
 
 .timeline .done .pika,
 .timeline .current .pika {
-  border-color: var(--btn);
-  background: var(--btn);
+  border-color: var(--primary);
+  background: var(--primary);
   color: #ffffff;
 }
 
 .timeline .current {
-  color: var(--text);
+  color: var(--ink);
   font-weight: 700;
 }
 
-.njoftim {
-  padding: 10px 12px;
-  border-left: 4px solid #14683a;
-  background: rgba(20, 104, 58, 0.15);
-  font-weight: 600;
+/* Paneli */
+.profili {
+  display: grid;
+  gap: 6px;
 }

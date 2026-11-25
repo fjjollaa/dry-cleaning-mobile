@@ -1,33 +1,43 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import "./globals.css";
+import HyrjaKoka from "@/components/HyrjaKoka";
+import Menu from "@/components/Menu";
 import Pwa from "@/components/Pwa";
+import { providerat } from "@/lib/auth";
+import { BIZNESI } from "@/lib/biznesi";
+
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Pastrim kimik",
+  title: "Pastrim Kimik Expert Wash",
   description: "Dërgo porosi për pastrim kimik dhe shiko statusin pa rifreskuar faqen.",
 };
 
-export const viewport: Viewport = { themeColor: "#0b6e7f" };
+// viewportFit "cover": përmbajtja shkon deri te skajet e iPhone-it; menuja e poshtme respekton hapësirën e sigurt.
+export const viewport: Viewport = { themeColor: "#1f6fe0", viewportFit: "cover" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="sq">
+    <html lang="sq" className={inter.className}>
       <body>
         <Pwa />
         <header className="topbar">
-          <nav aria-label="Menuja kryesore">
-            <Link href="/">Çmimorja</Link>
-            <Link href="/porosi-e-re">Porosi e re</Link>
-            <Link href="/porosite">Porositë</Link>
-            <Link href="/panel">Paneli</Link>
-          </nav>
+          <div className="topbar-in">
+            <Link href="/" className="brand">
+              <Image src="/icons/icon-192.png" alt="" width={32} height={32} />
+              <span>{BIZNESI.emri}</span>
+            </Link>
+            <Suspense fallback={null}>
+              <Menu />
+            </Suspense>
+            <HyrjaKoka providerat={providerat} />
+          </div>
         </header>
         {children}
-        <footer className="footer">
-          <a href="/offline.html">Çmimorja dhe orari pa internet</a>
-          <p>Kopja e ruajtur mund të jetë e vjetër. Pa internet nuk dërgohen dhe nuk ndryshohen porosi.</p>
-        </footer>
       </body>
     </html>
   );

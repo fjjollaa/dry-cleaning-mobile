@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // 75 është parazgjedhja; 90 përdoret për foton e banderolës, që të mos duket e turbullt.
+  images: { qualities: [75, 90] },
 };
 
 export default nextConfig;
