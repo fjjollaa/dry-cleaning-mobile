@@ -1,0 +1,30 @@
+{
+  "name": "aplikacioni",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test:validim": "node scripts/test-validim.mjs",
+    "test:porosite": "node --env-file=.env.local scripts/test-porosite.mjs",
+    "db:skema": "node --env-file=.env.local scripts/apliko-skemen.mjs schema.sql"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.1",
+    "next": "16.4.6",
+    "next-auth": "^4.24.15",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "typescript": "^5"
+  }
+}

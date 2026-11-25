@@ -1,0 +1,358 @@
+:root {
+  --bg: #f5f9fa;
+  --card: #ffffff;
+  --text: #12222b;
+  --muted: #4a5b66;
+  --line: #b9c9d1;
+  --link: #075a69;
+  --btn: #0b6e7f;
+  --btn-text: #ffffff;
+  --btn-alt: #5b6b75;
+  --warn-bg: #fff4d6;
+  --warn-line: #b58400;
+  --warn-text: #4a3600;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1a20;
+    --card: #15262e;
+    --text: #e8f1f4;
+    --muted: #b0c2cb;
+    --line: #3c5967;
+    --link: #7fd6e6;
+    --btn: #0b6e7f;
+    --btn-alt: #566873;
+    --warn-bg: #3a2f00;
+    --warn-line: #d9b94a;
+    --warn-text: #ffe9a6;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--link);
+}
+
+main {
+  max-width: 720px;
+  margin: auto;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 8px 0 16px;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+.topbar {
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+}
+
+.topbar nav {
+  display: flex;
+  gap: 4px;
+  max-width: 720px;
+  margin: auto;
+  padding: 0 8px;
+}
+
+.topbar a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  font-weight: 600;
+}
+
+.footer {
+  max-width: 720px;
+  margin: auto;
+  padding: 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.list,
+.porosite {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.card p {
+  margin: 4px 0;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--btn);
+  color: var(--btn-text);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action-dytesor {
+  background: var(--btn-alt);
+}
+
+.action:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.action:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--link);
+  outline-offset: 2px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.form {
+  display: grid;
+  gap: 6px;
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.form label {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.live-box {
+  margin-top: 8px;
+}
+
+.live-box .banner {
+  padding: 10px 12px;
+  border: 1px solid var(--warn-line);
+  border-radius: 8px;
+  background: var(--warn-bg);
+  color: var(--warn-text);
+}
+
+.veprimet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.small {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.status {
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.status-gati {
+  border-color: #14683a;
+  background: #14683a;
+  color: #ffffff;
+}
+
+.status-refuzuar {
+  border-style: dashed;
+}
+
+/* Çmimorja */
+.cmimorja {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cmimorja li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.cmimorja li:first-child {
+  border-top: 0;
+}
+
+/* Shporta e porosisë */
+.grupi {
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.grupi legend {
+  padding: 0 6px;
+  font-weight: 700;
+}
+
+.artikulli {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.artikulli:first-of-type {
+  border-top: 0;
+}
+
+.artikulli-info {
+  display: grid;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper output {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.stepper-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.stepper-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.stepper-btn:focus-visible {
+  outline: 3px solid var(--link);
+  outline-offset: 2px;
+}
+
+/* Porositë: artikujt dhe vija kohore e statusit */
+.artikujt {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin: 12px 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.timeline li {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  color: var(--muted);
+}
+
+.timeline .pika {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.timeline .done .pika,
+.timeline .current .pika {
+  border-color: var(--btn);
+  background: var(--btn);
+  color: #ffffff;
+}
+
+.timeline .current {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.njoftim {
+  padding: 10px 12px;
+  border-left: 4px solid #14683a;
+  background: rgba(20, 104, 58, 0.15);
+  font-weight: 600;
+}

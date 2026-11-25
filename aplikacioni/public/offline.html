@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="sq"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pastrim kimik · Çmimorja e ruajtur</title>
+<style>
+:root{color-scheme:light dark}
+body{margin:0;background:#f5f9fa;color:#12222b;font:18px/1.6 system-ui,sans-serif}
+@media (prefers-color-scheme:dark){body{background:#0e1a20;color:#e8f1f4}}
+main{max-width:720px;margin:auto;padding:16px}
+h1{font-size:clamp(26px,7vw,38px)}
+button,a{font:inherit}
+a{color:#075a69}
+@media (prefers-color-scheme:dark){a{color:#7fd6e6}}
+button{min-height:44px;padding:10px 18px;border:0;border-radius:8px;background:#0b6e7f;color:#fff;font-weight:600;cursor:pointer}
+button:disabled{opacity:.6;cursor:default}
+.card{padding:14px 16px;margin:12px 0;border:1px solid #8aa0ab;border-radius:12px}
+.card h2{margin:0 0 4px;font-size:20px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px solid #8aa0ab}
+.row:first-of-type{border-top:0}
+#source{padding:12px 16px;border-left:4px solid #0b6e7f;background:rgba(11,110,127,.12)}
+*:focus-visible{outline:3px solid #0b6e7f;outline-offset:3px}
+</style></head><body><main>
+<p>Pastrim kimik · Lexim publik</p>
+<h1>Çmimorja dhe orari, edhe pa internet</h1>
+<p id="source" role="status" aria-live="polite">Po lexojmë listën…</p>
+<p>Ruajtur për herë të fundit: <time id="saved">—</time></p>
+<button id="refresh" type="button">Rifresko listën</button>
+<section class="card" id="biznesi" aria-label="Të dhënat e dyqanit"></section>
+<div id="sherbimet"></div>
+<p>Kjo pamje shërben vetëm për lexim. Çmimet dhe orari mund të kenë ndryshuar; asnjë porosi nuk dërgohet pa internet.</p>
+<a href="/">Kthehu te aplikacioni</a>
+</main><script>
+const source = document.querySelector("#source");
+const list = document.querySelector("#sherbimet");
+const shop = document.querySelector("#biznesi");
+const refresh = document.querySelector("#refresh");
+
+function line(text) {
+  const p = document.createElement("p");
+  p.style.margin = "2px 0";
+  p.textContent = text;
+  return p;
+}
+
+function row(name, price) {
+  const div = document.createElement("div");
+  div.className = "row";
+  const left = document.createElement("span");
+  left.textContent = name;
+  const right = document.createElement("strong");
+  right.textContent = price;
+  div.append(left, right);
+  return div;
+}
+
+async function load() {
+  refresh.disabled = true;
+  source.textContent = "Po kërkojmë listën…";
+  try {
+    const response = await fetch("/api/sherbimet", { cache: "no-store" });
+    const data = await response.json();
+    if (!response.ok || !Array.isArray(data.sherbimet)) throw new Error("no_snapshot");
+
+    shop.replaceChildren();
+    const name = document.createElement("h2");
+    name.textContent = data.biznesi.emri;
+    shop.append(name, line("Adresa: " + data.biznesi.adresa), line("Telefoni: " + data.biznesi.telefoni), line("Orari: " + data.biznesi.orari));
+
+    const groups = new Map();
+    for (const s of data.sherbimet) {
+      if (!groups.has(s.kategoria)) groups.set(s.kategoria, []);
+      groups.get(s.kategoria).push(s);
+    }
+    list.replaceChildren();
+    for (const [category, items] of groups) {
+      const card = document.createElement("section");
+      card.className = "card";
+      const title = document.createElement("h2");
+      title.textContent = category;
+      card.append(title);
+      for (const s of items) {
+        const price = s.cmimi === null ? "[PLOTËSO] çmimi" : Number(s.cmimi).toFixed(2) + " € / " + s.njesia;
+        card.append(row(s.emri, price));
+      }
+      list.append(card);
+    }
+
+    const saved = response.headers.get("x-pastrim-saved-at");
+    document.querySelector("#saved").textContent = saved
+      ? new Date(saved).toLocaleString("sq-AL")
+      : "Lexuar drejtpërdrejt; kopja ende nuk u ruajt.";
+    source.textContent = response.headers.get("x-pastrim-source") === "cache"
+      ? "Lista e fundit e ruajtur · Mund të jetë vjetruar. Serveri nuk u arrit."
+      : "Lista erdhi nga serveri.";
+  } catch {
+    source.textContent = list.children.length
+      ? "Lidhja dështoi. Lista në ekran është e mëparshme."
+      : "Ende nuk ka listë të ruajtur. Hape aplikacionin me internet dhe provo përsëri.";
+  } finally {
+    refresh.disabled = false;
+  }
+}
+
+refresh.addEventListener("click", load);
+window.addEventListener("offline", () => {
+  source.textContent = "Lidhja duket e ndërprerë. Lista e shfaqur mund të jetë e vjetër.";
+});
+window.addEventListener("online", () => {
+  source.textContent = "Rrjeti duket i lidhur. Shtyp Rifresko listën për ta pyetur serverin.";
+});
+load();
+</script></body></html>
