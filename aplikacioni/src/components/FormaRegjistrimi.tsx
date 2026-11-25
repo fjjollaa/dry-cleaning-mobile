@@ -78,6 +78,9 @@ export default function FormaRegjistrimi({ kthe }: { kthe: string }) {
         <button className="action action-bllok" type="submit" disabled={duke}>
           {duke ? "Po krijohet…" : "Krijo llogari"}
         </button>
+        <p className="small qendra">
+          Duke krijuar llogari pranon <Link href="/privatesia">politikën e privatësisë</Link>.
+        </p>
       </form>
 
       <p className="small qendra">

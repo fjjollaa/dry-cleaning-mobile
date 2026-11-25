@@ -171,6 +171,22 @@ p {
   margin-top: 16px;
 }
 
+/* Faqet me tekst (politika e privatësisë) */
+.tekst h2 {
+  margin: 22px 0 6px;
+  font-size: 1.1rem;
+  color: var(--primary-strong);
+}
+
+.tekst ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
+.tekst li {
+  margin: 6px 0;
+}
+
 /* Hyrja dhe krijimi i llogarisë */
 .gabim {
   margin: 0;

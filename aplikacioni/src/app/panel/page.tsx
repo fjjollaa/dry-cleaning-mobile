@@ -21,6 +21,9 @@ export default function Panel() {
         </p>
         <a href="/offline.html">Hap çmimoren e ruajtur</a>
       </section>
+      <p className="small qendra">
+        <Link href="/privatesia">Politika e privatësisë</Link>
+      </p>
     </main>
   );
 }

@@ -5,6 +5,8 @@ export const BIZNESI = {
   emri: "Pastrim Kimik Expert Wash",
   kontakti: "[PLOTËSO] personi i kontaktit",
   telefoni: "+383 44 000 000",
+  // Emaili i kontaktit shfaqet publikisht te politika e privatësisë (kërkohet nga Google).
+  email: "[PLOTËSO] email i kontaktit",
   adresa: "Qendër, Podujevë",
   orari: "E hënë – e shtunë 08:00 – 19:00 · E diel mbyllur",
 } as const;
